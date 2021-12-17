@@ -1,0 +1,171 @@
+﻿@page "/DT_OnHold"
+@using Syncfusion.Blazor.Inputs;
+@using System.Xml.Schema
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="div-container-center">
+    <div>
+        <h1> Stock Take - DT</h1>
+    </div>
+    <br />
+    <div>
+        <table class="table-container-Left">
+            <tr>
+                <td>
+                    <label>ST Job No:</label>
+                </td>
+                <td>
+                    <label>@STJobNo</label>
+                </td>
+            </tr>
+            <tr><td style="height: 5px;"></td></tr>
+            <tr>
+                <td>
+                    <label>D/T No:</label>
+                </td>
+                <td>
+                    <SfTextBox Placeholder="@DTNo" @bind-Value="@QRInfo" Input="NavInputHandler" @onkeyup="KeyPressHandler"/>
+                </td>
+            </tr>
+            <tr><td style="height: 5px;"></td></tr>
+            <tr>
+                <td>
+                    <label>Parts No:</label>
+                </td>
+                <td>
+                    <label>@PartsNo</label>
+                </td>
+            </tr>
+            <tr><td style="height: 5px;"></td></tr>
+            <tr>
+                <td>
+                    <label>Supplier:</label>
+                </td>
+                <td>
+                    <label>@Supplier</label>
+                </td>
+            </tr>
+            <tr><td style="height: 5px;"></td></tr>
+            <tr>
+                <td>
+                    <label>SRBQ:</label>
+                </td>
+                <td>
+                    <label>@SRBQ</label>
+                </td>
+            </tr>
+            <tr><td style="height: 5px;"></td></tr>
+            <tr>
+                <td>
+                    <label>Total D/T:</label>
+                </td>
+                <td>
+                    <label>@TotalDT</label>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+
+<div class="div-footer">
+    <a style="width: 20%" class="btn btn-primary btn-sm" href="/StockTakeMenu">Back</a>
+</div>
+
+@code {
+    private string STJobNo = "ST2021121401";
+    private string DTNo;
+    private string PartsNo;
+    private string Supplier;
+    private string SRBQ;
+    private int TotalDT = 0;
+    public string QRInfo { get; set; }
+
+    public void UpdateValue()
+    {
+        //if (this.QRInfo != null)
+        //{
+        //List<String> listStrLineElements;
+        //listStrLineElements = QRInfo.Split('|').ToList();
+
+        //SRBQ = listStrLineElements[1];
+        //Supplier = listStrLineElements[2];
+        //PartsNo = listStrLineElements[3];
+        //DTNo = listStrLineElements[4];
+        QRInfo = null;
+        //TotalDT++;
+
+        //}
+    }
+
+    private async void NavInputHandler(InputEventArgs args)
+
+    {
+        //if (args.Value == "Z")
+        //{
+        //    QRInfo = args.Value;
+        //}
+
+        if (args.Value != null)
+        {
+            //List<String> listStrLineElements;
+            //listStrLineElements = args.Value.Split('|').ToList();
+            string[] listStrLineElements = args.Value.Split('|');
+
+            SRBQ = listStrLineElements[1];
+            Supplier = listStrLineElements[2];
+            PartsNo = listStrLineElements[3];
+            DTNo = listStrLineElements[4];
+            TotalDT++;
+            QRInfo = args.Value; ;
+
+        }
+
+        await Task.CompletedTask;
+    }
+
+    private async Task KeyPressHandler(KeyboardEventArgs args)
+
+    {
+        //if (args.Key == "Enter" || args.Key == "Z")
+
+        //{
+        QRInfo = null;
+        //}
+        await Task.CompletedTask;
+    }
+}
+
+<style>
+
+    .div-container-center {
+        margin: auto;
+        width: 100%;
+        text-align: center;
+        align-content: center;
+    }
+
+    .table-container-Left {
+        width: 100%;
+        text-align: left;
+    }
+
+    .btn-primary {
+        color: black;
+        background-color: lightgrey;
+        border-color: grey;
+    }
+
+    .btn-group-sm > .btn, .btn-sm {
+        width: 60%;
+    }
+
+    .div-footer {
+        position: fixed;
+        bottom: 30px;
+        width: 100%;
+        text-align: right;
+        padding-right: 20%
+    }
+</style>
